@@ -1,0 +1,12 @@
+module BottomsUp
+{
+
+    character_trait_definition bu:heavierdrinker
+    {
+      CharacterTrait = bu:heavierdrinker,
+      IsProfessionTrait = false,  
+      UIName = UI_trait_BUHeavierDrinker,
+      UIDescription = UI_trait_BUHeavierDrinkerDesc,
+      Cost = -4,
+    }
+}

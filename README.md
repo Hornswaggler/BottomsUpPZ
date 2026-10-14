@@ -7,3 +7,7 @@ See: https://pzwiki.net/wiki/Mod_structure for more info.
 This folder is not included in steam-workshop uploads; it is useful for keeping raw images, psd files, larger assets that you may want to keep with your project but obviously don't want players to have to download.
 
 <sup>Note: This is not a standard folder, and can be named anything.</sup>
+
+%USERPROFILE%\Zomboid
+
+C:\Program Files (x86)\Steam\steamapps\common\ProjectZomboid
