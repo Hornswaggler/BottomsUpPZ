@@ -5,41 +5,41 @@ require "TimedActions/ISBaseTimedAction"
 ---@class BUVomitTimedAction: ISBaseTimedAction
 BUVomitTimedAction = ISBaseTimedAction:derive("BUVomitTimedAction")
 
--- function BUVomitTimedAction:new(player)
---   ---@type ISBaseTimedAction
---   local o = ISBaseTimedAction.new(self, player)
---   o.stopOnWalk, o.stopOnRun, o.stopOnAim = false, false, false
---   o.maxTime = (106/30) * 60 -- 30 ticks = 1 second of animation time
---   return o
--- end
+function BUVomitTimedAction:new(player)
+  ---@type ISBaseTimedAction
+  local o = ISBaseTimedAction.new(self, player)
+  o.stopOnWalk, o.stopOnRun, o.stopOnAim = false, false, false
+  o.maxTime = (106/30) * 60 -- 30 ticks = 1 second of animation time
+  return o
+end
 
--- ---@return boolean
--- function BUVomitTimedAction:isValid()
---   return self.character ~= nil and not self.character:isDead()
--- end
+---@return boolean
+function BUVomitTimedAction:isValid()
+  return self.character ~= nil and not self.character:isDead()
+end
 
--- function BUVomitTimedAction:start()
---   print("BUVomitTimedAction:start()")
---   self.soundID = self.character:getEmitter():playSound("BU_Vomit")
---   self:setActionAnim("buVomit")
--- end
+function BUVomitTimedAction:start()
+  print("BUVomitTimedAction:start()")
+  self.soundID = self.character:getEmitter():playSound("BU_Vomit")
+  self:setActionAnim("buVomit")
+end
 
--- function BUVomitTimedAction:perform()
---   print("BUVomitTimedAction:perform()")
---   ISBaseTimedAction.perform(self)
--- end
+function BUVomitTimedAction:perform()
+  print("BUVomitTimedAction:perform()")
+  ISBaseTimedAction.perform(self)
+end
 
--- function BUVomitTimedAction:stop()
---   print("BUVomitTimedAction:stop()")
---   if self.soundID and self.character:getEmitter():isPlaying(self.soundID) then
---     self.character:getEmitter():stopSound(self.soundID)
---   end
---   ISBaseTimedAction.stop(self)
--- end
+function BUVomitTimedAction:stop()
+  print("BUVomitTimedAction:stop()")
+  if self.soundID and self.character:getEmitter():isPlaying(self.soundID) then
+    self.character:getEmitter():stopSound(self.soundID)
+  end
+  ISBaseTimedAction.stop(self)
+end
 
--- function BUVomitTimedAction:createInGameUi()
---   return nil
--- end
+function BUVomitTimedAction:createInGameUi()
+  return nil
+end
 
 local function checkForAlcoholPoisoning()
   local player = getPlayer()
