@@ -1,0 +1,10 @@
+module BottomsUp {
+  sound BU_Vomit {
+    clip {
+      file = media/sound/BU_Vomit.ogg,
+      volume = 1,
+      distanceMin = 1,
+      distanceMax = 12,
+    }
+  }
+}
