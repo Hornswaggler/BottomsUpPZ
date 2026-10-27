@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animNode>
+	<m_Name>buDrunkenStumble</m_Name>
+	<m_AnimName>Bob_BU_StumbleRight</m_AnimName>
+
+	<!-- <m_StopAnimOnExit>false</m_StopAnimOnExit>
+	<m_EarlyTransitionOut>false</m_EarlyTransitionOut>
+
+	<m_BlendTime>0.10</m_BlendTime>
+	<m_BlendOutTime>0.10</m_BlendOutTime>
+	<m_SpeedScale>1.0</m_SpeedScale> -->
+	<!-- <m_Looped>true</m_Looped> -->
+	<m_SpeedScale>1.00</m_SpeedScale>
+	<m_Scalar>1.00</m_Scalar>
+	<!-- <m_Scalar>WalkSpeed</m_Scalar>
+	<m_Scalar2>WalkSpeed</m_Scalar2> -->
+	
+		<!-- <m_StopOnAnimEnd>false</m_StopOnAnimEnd> -->
+	<!-- <m_StopAnimOnExit>false</m_StopAnimOnExit>
+	<m_EarlyTransitionOut>false</m_EarlyTransitionOut> -->
+
+  <m_StopAnimOnExit>true</m_StopAnimOnExit>
+  <m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
+
+	<m_BlendTime>0.10</m_BlendTime>
+	<m_BlendOutTime>0.10</m_BlendOutTime>
+
+	<m_Conditions>
+		<m_Name>isLostInTheSauce</m_Name>
+		<m_Type>BOOL</m_Type>
+		<m_Value>true</m_Value>
+	</m_Conditions>
+
+	<!-- <m_Events x_name="dc18aa36-c515-4eb5-ba65-a81b3a28829a">
+		<m_EventName>Footstep</m_EventName>
+		<m_TimePc>0.2</m_TimePc>
+		<m_ParameterValue>walk</m_ParameterValue>
+	</m_Events>
+
+	<m_Events x_name="8fe82464-0b53-4abf-b7fa-126046a7fa22">
+		<m_EventName>Footstep</m_EventName>
+		<m_TimePc>0.65</m_TimePc>
+		<m_ParameterValue>walk</m_ParameterValue>
+	</m_Events> -->
+
+
+	
+</animNode>
