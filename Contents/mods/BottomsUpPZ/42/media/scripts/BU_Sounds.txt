@@ -3,8 +3,8 @@ module BottomsUp {
     clip {
       file = media/sound/BU_Vomit.ogg,
       volume = 1,
-      distanceMin = 5,
-      distanceMax = 150,
+      distanceMin = 1,
+      distanceMax = 12,
     }
   }
 }
