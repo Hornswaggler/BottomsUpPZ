@@ -1,4 +1,4 @@
-module BottomsUp {
+module BU {
   sound BU_Vomit {
     clip {
       file = media/sound/BU_Vomit.ogg,

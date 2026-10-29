@@ -24,7 +24,7 @@ local function checkForAlcoholPoisoning()
 
   ISTimedActionQueue.add(BUTimedActionVomit:new(player))
 
-  print("last time user had drink CAP:" .. tostring(BUModData.getPlayerLastDrinkTimestamp(player)))
+  print("last time user had drink CAP:" .. tostring(BU.getPlayerLastDrinkTimestamp(player)))
 
   -- bodyDamage:ReduceGeneralHealth(damageAmount)
   -- end

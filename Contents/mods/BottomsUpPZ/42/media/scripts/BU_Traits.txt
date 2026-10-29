@@ -1,4 +1,4 @@
-module BottomsUp
+module BU
 {
   character_trait_definition bu:heavierdrinker
   {
