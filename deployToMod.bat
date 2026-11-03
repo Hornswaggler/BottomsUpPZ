@@ -1,0 +1,1 @@
+robocopy "%USERPROFILE%\Zomboid\Workshop\BottomsUpPZ\Contents\mods\BottomsUpPZ" "%USERPROFILE%\Zomboid\mods\BottomsUpPZ" /E /IS /IT /R:0 /W:0
