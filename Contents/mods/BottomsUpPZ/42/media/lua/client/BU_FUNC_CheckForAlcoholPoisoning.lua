@@ -30,4 +30,4 @@ local function checkForAlcoholPoisoning()
   -- end
 end
 
-Events.EveryTenMinutes.Add(checkForAlcoholPoisoning)
+return checkForAlcoholPoisoning

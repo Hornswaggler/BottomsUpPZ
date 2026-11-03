@@ -1,8 +1,6 @@
-local STUMBLE_MAX = 100
-local STUMBLE_THRESHOLD = 75
-local STUMBLE_COOLDOWN = 5
+local BU = require "BU_STATE"
 
-local consecutiveStumbles = STUMBLE_COOLDOWN
+local consecutiveStumbles = BU.STUMBLE_COOLDOWN
 
 ---@param player IsoPlayer
 local function performStumble(player)
@@ -13,8 +11,8 @@ end
 
 ---@return boolean
 local function didDrunkenStumble()
-  if ZombRand(STUMBLE_MAX) > STUMBLE_THRESHOLD then
-    if consecutiveStumbles >= STUMBLE_COOLDOWN then
+  if ZombRand(BU.STUMBLE_MAX) > BU.STUMBLE_THRESHOLD then
+    if consecutiveStumbles >= BU.STUMBLE_COOLDOWN then
       consecutiveStumbles = 0
       return true
     else
@@ -26,8 +24,13 @@ end
 
 local function checkForDrunkenStumble()
   local player = getPlayer()
-  if not player or player:isDead() then return end
+  if not player 
+    or player:isDead() 
+    or not player:isPlayerMoving() 
+    or player:isAsleep()
+  then return end
+
   if didDrunkenStumble() then performStumble(player) end
 end
 
-Events.EveryOneMinute.Add(checkForDrunkenStumble)
+return checkForDrunkenStumble
