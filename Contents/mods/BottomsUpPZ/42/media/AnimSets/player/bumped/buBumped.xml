@@ -22,6 +22,7 @@
 		<m_Type>STRING</m_Type>
 		<m_Value>stagger</m_Value>
 	</m_Conditions>
+	<m_SpeedScale>3.0</m_SpeedScale>	
 
 	<!-- <m_Events>
 		<m_EventName>SetVariable</m_EventName>

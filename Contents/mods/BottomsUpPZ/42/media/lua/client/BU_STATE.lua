@@ -7,9 +7,6 @@
 ---@field dailyConsumptionTarget number
 ---@field dailyConsumptionRemaining number
 
----@alias BUModDataEnum "'lastDrinkTimestamp'" | "'tolerance'" | "'dailyConsumptionTarget'" | "'dailyConsumptionRemaining'"
-
-
 ---@return table | BUModData
 local function newModData()
   return {
@@ -24,6 +21,9 @@ BU = BU or {}
 BU.module = "BU"
 BU.modData = BU.modData or newModData()
 BU.HEAVY_DRINKER_TRAIT_ID = "bu:heavierdrinker"
+BU.STUMBLE_MAX = 100
+BU.STUMBLE_THRESHOLD = 1
+BU.STUMBLE_COOLDOWN = 5
 
 ---@param player IsoPlayer
 ---@return BUModData
@@ -71,3 +71,4 @@ function BU.updateDailyConsumptionRemaining(player, delta)
   BU.updateLastDrinkTimestamp(player)
 end
 
+return BU
