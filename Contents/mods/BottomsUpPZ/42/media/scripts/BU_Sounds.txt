@@ -1,4 +1,4 @@
-module BU {
+module BOTTOMS_UP {
   sound BU_Vomit {
     clip {
       file = media/sound/BU_Vomit.ogg,

@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "sync-directory": "^6.0.6"
+  },
+  "scripts": {
+    "sync": "npx syncdir ./Contents/mods/BottomsUpPZ ../../mods/BottomsUpPZ --watch --deleteOrphaned",
+    "launch_debug": "bash ./launchPZ.sh debug",
+    "launch_nosteam": "bash ./launchPZ.sh nosteam",
+    "launch_debug_nosteam": "bash ./launchPZ.sh debug_nosteam",
+    "tail": "bash ./tailLogs.sh",
+    "launch_dedicated_server": "bash ./launchDedicatedServer.sh"
+  }
+}

@@ -3,6 +3,11 @@ local function checkForAlcoholPoisoning()
   if not player or player:isDead() then return end
 
   -- TODO: set Drunken Stumble when???
+
+  print("IS CLIENT: ", tostring(isClient()))
+
+  sendClientCommand("BU", "setPlayerVariable", {key = "isLostInTheSauce", value = true})
+  
   player:setVariable("isLostInTheSauce", true)
 
   local stats = player:getStats()
@@ -30,4 +35,29 @@ local function checkForAlcoholPoisoning()
   -- end
 end
 
-return checkForAlcoholPoisoning
+Events.EveryTenMinutes.Add(checkForAlcoholPoisoning)
+
+---@param command string
+local function onServerCommand(module, command, args)
+  print("Server command received: " .. tostring(module) .. " " .. tostring(command) .. " " .. tostring(args))
+  print("Online player at index...", tostring(getOnlinePlayers()[args.playerId]))
+
+  local onlinePlayers = getOnlinePlayers()
+  print("Online PLayers;" .. tostring(onlinePlayers))
+  
+  for i = 0, onlinePlayers:size() - 1 do
+    local player = onlinePlayers:get(i)
+    if not player:isLocalPlayer() then 
+      player:setVariable("isLostInTheSauce", true)
+    end
+    print("Player online Id:", tostring(player:getOnlineID()))
+  end
+
+
+
+  return
+end
+
+Events.OnServerCommand.Add(onServerCommand)
+
+-- return checkForAlcoholPoisoning
