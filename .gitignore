@@ -1,3 +1,5 @@
 .idea/*
 .vscode/*
 /notes/
+/node_modules/
+package-lock.json

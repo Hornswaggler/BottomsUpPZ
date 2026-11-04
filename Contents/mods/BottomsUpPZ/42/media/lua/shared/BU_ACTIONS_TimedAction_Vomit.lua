@@ -16,7 +16,6 @@ function BUTimedActionVomit:isValid()
   return self.character ~= nil and not self.character:isDead()
 end
 
--- TODO: Sound should be hooked in at the animation layer
 function BUTimedActionVomit:start()
   print("BUVomitTimedAction:start()")
   -- self.soundID = self.character:getEmitter():playSound("BU_Vomit")

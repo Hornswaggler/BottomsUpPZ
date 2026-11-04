@@ -1,9 +1,10 @@
-module BU
+module BOTTOMS_UP
 {
   character_trait_definition bu:heavierdrinker
   {
     CharacterTrait = bu:heavierdrinker,
     IsProfessionTrait = false,  
+    DisabledInMultiplayer = false,
     UIName = UI_trait_BUHeavierDrinker,
     UIDescription = UI_trait_BUHeavierDrinkerDesc,
     Cost = -4,
