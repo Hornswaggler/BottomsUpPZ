@@ -1,29 +1,16 @@
-local function setPlayerVariable(player, args)
-  if player and args and args.variable and args.value ~= nil then
-    player:setVariable(args.variable, args.value)
-  end
-end
+local BU = require("BU_STATE")
 
 ---@param player IsoPlayer
 local function onClientCommand(module, command, player, args)
+  if not isServer() then return end	
+  if module ~= BU.module then return end
 
-    local onlinePlayers = getOnlinePlayers()
-  for i = 0, onlinePlayers:size() - 1 do
-    local player = onlinePlayers:get(i)
-    print("Player online Id:", tostring(player:getOnlineID()))
-  end
-
+  -- todo: Add type safety
+  BU[command](player, args.payload)
   sendServerCommand(module, command, {
     args = args,
-    playerId = player:getID()
+    playerId = player:getOnlineID()
   })
-  print("Client Command Received: " .. tostring(module) .. " " .. tostring(command) .. " " .. tostring(args) .. tostring(player) .. tostring(player:getID()))
-  if module == "BU" and command == "setPlayerVariable" then
-    print("Module is BU: setting player variable")
-    setPlayerVariable(player, args)
-  end
 end
-
-print("BU_SERVER.lua loaded")
 
 Events.OnClientCommand.Add(onClientCommand)
