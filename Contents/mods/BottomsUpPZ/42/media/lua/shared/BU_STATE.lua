@@ -6,6 +6,7 @@
 ---How much user requires a day
 ---@field dailyConsumptionTarget number
 ---@field dailyConsumptionRemaining number
+---@field isLostInTheSauce boolean
 
 ---@return table | BUModData
 local function newModData()
@@ -13,7 +14,8 @@ local function newModData()
     lastDrinkTimestamp = 0,
     tolerance = 1,
     dailyConsumptionTarget = 1.0,
-    dailyConsumptionRemaining = 1.0
+    dailyConsumptionRemaining = 1.0,
+    isLostInTheSauce = false
   }
 end
 
@@ -33,6 +35,7 @@ function BU.getPlayerModData(player)
     playerModData.BU = newModData()
   else
     -- todo: remove this before release!!! 
+    --or... do this during startup... :|
     -- this is so I don't have to create a new save every time to clear the serialized values
     for k, v in pairs(newModData()) do
       if playerModData.BU[k] == nil then
@@ -43,32 +46,55 @@ function BU.getPlayerModData(player)
   return playerModData.BU
 end
 
+---@generic K: keyof BUModData
+---@param key K
+---@param value BUModData[K]
+---@param sync boolean
+BU.setModDataValue = function(player, key, value)
+  local modData = BU.getPlayerModData(player)
+  modData[key] = value
+end
+
+---@generic K: keyof BUModData
+---@param key K
+---@return BUModData[K]
+BU.getModDataValue = function(player, key)
+  local modData = BU.getPlayerModData(player)
+  return modData[key]
+end
+
 ---@param player IsoPlayer
 function BU.getPlayerLastDrinkTimestamp(player)
-  return BU.getPlayerModData(player).lastDrinkTimestamp
+  return BU.getModDataValue(player, "lastDrinkTimestamp")
 end
 
 ---@param player IsoPlayer
 ---@return number
 function BU.getPlayerDailyConsumptionTarget(player)
-  return BU.getPlayerModData(player).dailyConsumptionTarget
+  return BU.getModDataValue(player, "dailyConsumptionTarget")
 end
 
 ---@param player IsoPlayer
 function BU.updateLastDrinkTimestamp(player)
-  BU.getPlayerModData(player).lastDrinkTimestamp = getGametimeTimestamp()
+  BU.setModDataValue(player, "lastDrinkTimestamp", getGametimeTimestamp())
 end
 
 ---@param player IsoPlayer
 ---@param delta number
 function BU.updateDailyConsumptionRemaining(player, delta)
-  local modData = BU.getPlayerModData(player)
-
-  modData.dailyConsumptionRemaining = modData.dailyConsumptionRemaining + delta
-
-  print("Daily COnsumption remaining: " .. tostring(modData.dailyConsumptionRemaining))
-  
+  BU.setModDataValue(player, "dailyConsumptionRemaining", BU.getModDataValue(player, "dailyConsumptionRemaining") + delta)
   BU.updateLastDrinkTimestamp(player)
+end
+
+---@param player IsoPlayer
+---@param isLostInTheSauce boolean
+BU.setIsLostInTheSauce = function(player, isLostInTheSauce)
+  player:setVariable("isLostInTheSauce", isLostInTheSauce)
+  BU.setModDataValue(player, "isLostInTheSauce", isLostInTheSauce)
+  
+  if isClient() and player:isLocalPlayer() then 
+    sendClientCommand(BU.module, "setIsLostInTheSauce", {payload = isLostInTheSauce})
+  end
 end
 
 return BU
