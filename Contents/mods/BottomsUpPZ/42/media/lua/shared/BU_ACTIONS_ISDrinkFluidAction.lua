@@ -1,3 +1,16 @@
+local BU = require("BU_STATE")
+local checkForAlcoholPoisoning = require("BU_FUNC_CheckForAlcoholPoisoning")
+
+local updateDailyConsumptionRemaining = function(drinkFluidAction)
+  if drinkFluidAction.buIsAlcoholicDrink then
+    if drinkFluidAction.item:isFluidContainer() and not drinkFluidAction.item:getFluidContainer():isEmpty() then
+      BU.updateDailyConsumptionRemaining(drinkFluidAction.character, drinkFluidAction:getJobDelta() * drinkFluidAction.buAlcoholAmount * -1)
+    else
+      BU.updateDailyConsumptionRemaining(drinkFluidAction.character, drinkFluidAction.buAlcoholAmount * -1)
+    end
+    checkForAlcoholPoisoning()
+  end
+end
 
 local superStart = ISDrinkFluidAction.start
 function ISDrinkFluidAction:start()
@@ -29,21 +42,33 @@ end
 
 local superPerform = ISDrinkFluidAction.perform
 function ISDrinkFluidAction:perform()
-  ---@diagnostic disable-next-line: unnecessary-if
-  if self.buIsAlcoholicDrink then
-    BU.updateDailyConsumptionRemaining(self.character, self.buAlcoholAmount * -1)
-  end
+  print("Perform Called...")
+  BU.tsPrint("Finished Drinking: " .. tostring(self.buAlcoholAmount))
+  updateDailyConsumptionRemaining(self)
+  -- ---@diagnostic disable-next-line: unnecessary-if
+  -- if self.buIsAlcoholicDrink then
+  --   BU.updateDailyConsumptionRemaining(self.character, self.buAlcoholAmount * -1)
+  -- end
   superPerform(self)
+end
+
+local superComplete = ISDrinkFluidAction.complete
+function ISDrinkFluidAction:complete()
+  print("Complete Called: " .. tostring(self.buAlcoholAmount))
+  return superComplete(self)
 end
 
 local superStop = ISDrinkFluidAction.stop
 function ISDrinkFluidAction:stop()
-  ---@diagnostic disable-next-line: unnecessary-if
-  if self.buIsAlcoholicDrink 
-    and self.item:isFluidContainer() 
-    and not self.item:getFluidContainer():isEmpty()
-  then
-    BU.updateDailyConsumptionRemaining(self.character, self:getJobDelta() * self.buAlcoholAmount * -1)
-  end 
+  -- ---@diagnostic disable-next-line: unnecessary-if
+  updateDailyConsumptionRemaining(self)
+
+  -- if self.buIsAlcoholicDrink then
+  --   if self.item:isFluidContainer() and not self.item:getFluidContainer():isEmpty() then
+  --     BU.updateDailyConsumptionRemaining(self.character, self:getJobDelta() * self.buAlcoholAmount * -1)
+  --   else
+  --     BU.updateDailyConsumptionRemaining(self.character, self.buAlcoholAmount * -1)
+  --   end
+  -- end
   superStop(self)
 end
