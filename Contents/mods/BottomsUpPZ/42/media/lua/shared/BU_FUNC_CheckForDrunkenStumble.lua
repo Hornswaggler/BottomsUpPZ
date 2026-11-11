@@ -30,7 +30,8 @@ local function checkForDrunkenStumble()
     or player:isAsleep()
   then return end
 
-  if didDrunkenStumble() then performStumble(player) end
+  local isLostInTheSauce = BU.getModDataValue(player, "isLostInTheSauce")
+  if isLostInTheSauce and didDrunkenStumble() then performStumble(player) end
 end
 
 return checkForDrunkenStumble
