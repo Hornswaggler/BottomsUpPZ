@@ -1,6 +1,6 @@
 local BU = require "BU_STATE"
 
-local consecutiveStumbles = BU.STUMBLE_COOLDOWN
+local consecutiveStumbles = BU.CONST.STUMBLE_COOLDOWN
 
 ---@param player IsoPlayer
 local function performStumble(player)
@@ -11,8 +11,8 @@ end
 
 ---@return boolean
 local function didDrunkenStumble()
-  if ZombRand(BU.STUMBLE_MAX) > BU.STUMBLE_THRESHOLD then
-    if consecutiveStumbles >= BU.STUMBLE_COOLDOWN then
+  if ZombRand(BU.CONST.STUMBLE_MAX) > BU.CONST.STUMBLE_THRESHOLD then
+    if consecutiveStumbles >= BU.CONST.STUMBLE_COOLDOWN then
       consecutiveStumbles = 0
       return true
     else

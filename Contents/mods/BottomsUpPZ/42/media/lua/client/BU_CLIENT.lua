@@ -1,19 +1,26 @@
+local BU = require "BU_STATE"
+
+---@param module string
 ---@param command string
-local function onServerCommand(module, command, args)
-  if not isClient() then return end
-  if module ~= BU.module then return end
+---@param packet BUDataPacket | nil
+---@---@type Callback_OnServerCommand
+local onServerCommand = function(module, command, packet)
+  
+  if not isClient() or
+    module ~= BU.module or
+    BU[command] == nil or
+    type(BU[command]) ~= "function" or
+    packet == nil
+  then return end
 
-  local targetPlayer = getPlayerByOnlineID(args.playerId)
-  local targetFunction = BU[command]
+  local targetPlayer = getPlayerByOnlineID(packet.playerId)
+  if targetPlayer == nil then return end
 
-  local payload = args.args.payload
+  local payload = packet.payload
 
-  print("Target Function is: " .. tostring(targetFunction) .. " Payload: " .. tostring(payload))
-  print("Params: " .. unpack(payload,1, #payload))
+  print("Target Function is: " .. tostring(command) .. " " .. tostring(BU[command]) .. " Payload: " .. tostring(payload))
+  BU[command](targetPlayer, payload.key, payload.value)
 
-  if targetPlayer and not targetPlayer:isLocalPlayer() and targetFunction ~= nil then
-    targetFunction(targetPlayer, unpack(args.args.payload, 1, #args.args.payload))
-  end
 end
 
 Events.OnServerCommand.Add(onServerCommand)

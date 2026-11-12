@@ -1,3 +1,4 @@
+-- local BU = require "BU_STATE"
 
 ---@class BUVomitTimedAction: ISBaseTimedAction
 BUTimedActionVomit = ISBaseTimedAction:derive("BUVomitTimedAction")

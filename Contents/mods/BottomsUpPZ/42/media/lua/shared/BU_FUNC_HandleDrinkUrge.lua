@@ -34,13 +34,13 @@
 
 --   parentUpdate(self)
 -- end
-
+local BU = require "BU_STATE"
 
 local function handleDrinkUrge()
   print("Handling Urge")
   local player = getPlayer()
   if not player or player:isDead() then return end
-  local dailyConsumptionTarget = BU.getPlayerDailyConsumptionTarget(player)
+  local dailyConsumptionTarget = BU.getModDataValue(player, "dailyConsumptionTarget")
   BU.updateDailyConsumptionRemaining(player, dailyConsumptionTarget / 24)
 end
 
