@@ -1,4 +1,4 @@
-local BU = require "BU_STATE"
+local BU = require "BU"
 
 ---@param module string
 ---@param command string
@@ -16,10 +16,13 @@ local onServerCommand = function(module, command, packet)
   local targetPlayer = getPlayerByOnlineID(packet.playerId)
   if targetPlayer == nil then return end
 
-  local payload = packet.payload
+  local payload = packet.payload or {}
 
-  print("Target Function is: " .. tostring(command) .. " " .. tostring(BU.Commands[command]) .. " Payload: " .. tostring(payload))
-  BU.Commands[command](targetPlayer, payload.key, payload.value)
+  if payload ~= nil then
+    BU.Commands[command](targetPlayer, payload.key, payload.value)
+  else
+    BU.Commands[command](targetPlayer)
+  end
 end
 
 Events.OnServerCommand.Add(onServerCommand)

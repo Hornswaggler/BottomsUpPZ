@@ -34,7 +34,7 @@
 
 --   parentUpdate(self)
 -- end
-local BU = require "BU_STATE"
+local BU = require "BU"
 
 local function handleDrinkUrge()
   print("Handling Urge")

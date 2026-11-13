@@ -1,4 +1,4 @@
-local BU = require "BU_STATE"
+local BU = require "BU"
 
 local checkForAlcoholPoisoning = require("BU_FUNC_CheckForAlcoholPoisoning")
 local checkForDrunkenStumble = require("BU_FUNC_CheckForDrunkenStumble")

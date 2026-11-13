@@ -1,4 +1,4 @@
-local BU = require "BU_STATE"
+local BU = require "BU"
 
 if isServer() then
   Events.EveryTenMinutes.Add(function() 
