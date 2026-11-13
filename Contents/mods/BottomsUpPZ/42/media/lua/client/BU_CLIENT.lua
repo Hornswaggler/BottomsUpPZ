@@ -8,8 +8,8 @@ local onServerCommand = function(module, command, packet)
   
   if not isClient() or
     module ~= BU.module or
-    BU[command] == nil or
-    type(BU[command]) ~= "function" or
+    BU.Commands[command] == nil or
+    type(BU.Commands[command]) ~= "function" or
     packet == nil
   then return end
 
@@ -18,9 +18,8 @@ local onServerCommand = function(module, command, packet)
 
   local payload = packet.payload
 
-  print("Target Function is: " .. tostring(command) .. " " .. tostring(BU[command]) .. " Payload: " .. tostring(payload))
-  BU[command](targetPlayer, payload.key, payload.value)
-
+  print("Target Function is: " .. tostring(command) .. " " .. tostring(BU.Commands[command]) .. " Payload: " .. tostring(payload))
+  BU.Commands[command](targetPlayer, payload.key, payload.value)
 end
 
 Events.OnServerCommand.Add(onServerCommand)

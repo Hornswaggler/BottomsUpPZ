@@ -40,8 +40,8 @@ local function handleDrinkUrge()
   print("Handling Urge")
   local player = getPlayer()
   if not player or player:isDead() then return end
-  local dailyConsumptionTarget = BU.getModDataValue(player, "dailyConsumptionTarget")
-  BU.updateDailyConsumptionRemaining(player, dailyConsumptionTarget / 24)
+  local dailyConsumptionTarget = BU.Commands.getModDataValue(player, "dailyConsumptionTarget")
+  BU.Commands.updateDailyConsumptionRemaining(player, dailyConsumptionTarget / 24)
 end
 
 return handleDrinkUrge

@@ -3,7 +3,7 @@ local checkForAlcoholPoisoning = require("BU_FUNC_CheckForAlcoholPoisoning")
 
 local initBUDrinkAction = function(drinkFluidAction)
   local player = drinkFluidAction.character
-    if player:hasTrait(CharacterTrait.get(ResourceLocation.of(BU.CONST.HEAVY_DRINKER_TRAIT_ID))) then
+    if player:hasTrait(CharacterTrait.get(ResourceLocation.of(BU.Config.HEAVY_DRINKER_TRAIT_ID))) then
       print("Player has the heavy drinker trait")
     else
       print("Player does not have the trait...")
@@ -67,8 +67,8 @@ local updateDailyConsumptionRemaining = function(drinkFluidAction, delta)
   print("Updating daily consumption..." .. tostring(isServer()))
 
   if drinkFluidAction.buIsAlcoholicDrink then
-    BU.updateDailyConsumptionRemaining(drinkFluidAction.character, delta * drinkFluidAction.buAlcoholAmount * -1)
-    -- checkForAlcoholPoisoning(drinkFluidAction.character)
+    BU.Commands.updateDailyConsumptionRemaining(drinkFluidAction.character, delta * drinkFluidAction.buAlcoholAmount * -1)
+    checkForAlcoholPoisoning(drinkFluidAction.character)
   end
 end
 
@@ -84,18 +84,20 @@ end
 
 local superStop = ISDrinkFluidAction.stop
 function ISDrinkFluidAction:stop()
-  print("self.buIsAlcoholicDrink: " .. tostring(self.buIsAlcoholicDrink) .. " delta " .. tostring(self:getJobDelta()) )
-
-  updateDailyConsumptionRemaining(self, self:getJobDelta())
+  if isServer() then
+    print("self.buIsAlcoholicDrink: " .. tostring(self.buIsAlcoholicDrink) .. " delta " .. tostring(self:getJobDelta()) )
+    -- updateDailyConsumptionRemaining(self, self:getJobDelta())
+  end
   superStop(self)
 end
 
+-- todo should use pcall here...
 local superComplete = ISDrinkFluidAction.complete
 function ISDrinkFluidAction:complete()
-  print("Called complete" .. " is server? " .. tostring(isServer()))
-
-  print("self.buIsAlcoholicDrink: " .. tostring(self.buIsAlcoholicDrink) )
-  updateDailyConsumptionRemaining(self, 1)
-
+  if isServer() then
+    print("Called complete" .. " is server? " .. tostring(isServer()))
+    print("self.buIsAlcoholicDrink: " .. tostring(self.buIsAlcoholicDrink) )
+    updateDailyConsumptionRemaining(self, 1)
+  end
   return superComplete(self)
 end

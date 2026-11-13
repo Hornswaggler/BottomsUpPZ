@@ -5,13 +5,7 @@ local function checkForAlcoholPoisoning(player)
   -- local player = getPlayer()
   -- if not player or player:isDead() then return end
 
-  if isServer() then
-    BU.Util.tsPrint("Running server side...")
-  end
-
-
-
-  BU.syncAnimStates(player:getOnlineID(), player)
+  -- BU.syncAnimStates(player:getOnlineID(), player)
 
   local stats = player:getStats()
   local drunkenness = stats:get(CharacterStat.INTOXICATION)
@@ -21,7 +15,7 @@ local function checkForAlcoholPoisoning(player)
 
   if drunkenness > 85.0 then
     if isServer() then
-      BU.setModDataValue(player, "isLostInTheSauce", true)
+      BU.Commands.setModDataValue(player, "isLostInTheSauce", true)
     end
     -- print("Alcohol poisoning detected!")
     local severity = (drunkenness - 85.0) / 15.0
@@ -36,11 +30,11 @@ local function checkForAlcoholPoisoning(player)
       ISTimedActionQueue.add(BUTimedActionVomit:new(player))
     end
 
-    print("last time user had drink CAP:" .. tostring(BU.getModDataValue(player, "lastDrinkTimestamp")))
+    print("last time user had drink CAP:" .. tostring(BU.Commands.getModDataValue(player, "lastDrinkTimestamp")))
     -- bodyDamage:ReduceGeneralHealth(damageAmount)
   else
     if isServer() then
-      BU.setModDataValue(player, "isLostInTheSauce", false)
+      BU.Commands.setModDataValue(player, "isLostInTheSauce", false)
     end
   end
 end
