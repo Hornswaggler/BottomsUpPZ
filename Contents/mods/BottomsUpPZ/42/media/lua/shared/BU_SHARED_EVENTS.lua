@@ -21,28 +21,3 @@ Events.EveryTenMinutes.Add(function()
 end)
 Events.EveryOneMinute.Add(checkForDrunkenStumble)
 Events.EveryHours.Add(handleDrinkUrge)
-
--- todo never called server side
-
-
--- Events.EveryTenMinutes.Add(function() 
---   if isServer() then
---     -- for _, player in ipairs(getOnlinePlayers()) do
---     --   BU.Util.PrintPlayerInfo(player)
---     -- end
-
-
---     local players = getOnlinePlayers()
---     for i = 0, players:size() - 1 do
---       local player = players:get(i)
---       BU.Util.PrintPlayerInfo(player)
---     end
-
-    
---   else
---     local player = getPlayer()
---     if not player or player:isDead() then return end
---     BU.Util.PrintPlayerInfo(player)
---   end
-
--- end)
