@@ -1,4 +1,4 @@
-local BU = require "BU_STATE"
+local BU = require "BU"
 
 ---@param player IsoPlayer
 local function checkForAlcoholPoisoning(player)
