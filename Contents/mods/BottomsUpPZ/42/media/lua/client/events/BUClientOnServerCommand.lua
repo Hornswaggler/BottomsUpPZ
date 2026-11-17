@@ -1,4 +1,4 @@
-local BU = require "BU"
+if not isClient() then return end
 
 ---@param module string
 ---@param command string
@@ -6,8 +6,7 @@ local BU = require "BU"
 ---@---@type Callback_OnServerCommand
 local onServerCommand = function(module, command, packet)
   
-  if not isClient() or
-    module ~= BU.module or
+  if module ~= BU.module or
     BU.Commands[command] == nil or
     type(BU.Commands[command]) ~= "function" or
     packet == nil
@@ -16,13 +15,12 @@ local onServerCommand = function(module, command, packet)
   local targetPlayer = getPlayerByOnlineID(packet.playerId)
   if targetPlayer == nil then return end
 
-  local payload = packet.payload or {}
-
-  if payload ~= nil then
-    BU.Commands[command](targetPlayer, payload.key, payload.value)
-  else
-    BU.Commands[command](targetPlayer)
+  local payload = {}
+  if packet ~= nil and packet.payload ~= nil then
+    payload = packet.payload
   end
+
+  BU.Commands[command](targetPlayer, unpack(payload,1, #payload))
 end
 
 Events.OnServerCommand.Add(onServerCommand)

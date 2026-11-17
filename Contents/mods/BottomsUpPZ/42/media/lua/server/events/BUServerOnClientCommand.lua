@@ -1,4 +1,4 @@
--- local BU = require "BU"
+if not isServer() then return end
 
 ---@param module string
 ---@param command string
@@ -6,11 +6,14 @@
 ---@param args BUDataPacket | nil
 ---@type Callback_OnClientCommand
 local onClientCommand = function(module, command, player, args)
-  if not isServer() then return end	
-  if module ~= "BU" then return end
+  if module ~= BU.module then return end
 
-  local payload = args and args.payload 
-  BU.Commands[command](player, args ~= nil and unpack(payload,1, #payload) or nil)
+  local payload = {}
+  if args ~= nil and args.payload ~= nil then
+    payload = args.payload
+  end
+
+  BU.Commands[command](player, payload ~= nil and unpack(payload,1, #payload))
 
   sendServerCommand(module, command, {
     payload = payload,

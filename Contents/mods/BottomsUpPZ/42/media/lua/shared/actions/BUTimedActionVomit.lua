@@ -1,7 +1,7 @@
 -- local BU = require "BU_STATE"
 
----@class BUVomitTimedAction: ISBaseTimedAction
-BUTimedActionVomit = ISBaseTimedAction:derive("BUVomitTimedAction")
+---@class BUTimedActionVomit: ISBaseTimedAction
+BUTimedActionVomit = ISBaseTimedAction:derive("BUTimedActionVomit")
 
 function BUTimedActionVomit:new(player)
   ---@type ISBaseTimedAction
@@ -18,26 +18,27 @@ function BUTimedActionVomit:isValid()
 end
 
 function BUTimedActionVomit:start()
-  print("BUVomitTimedAction:start()")
+  print("BUTimedActionVomit:start()")
   -- self.soundID = self.character:getEmitter():playSound("BU_Vomit")
   self.character:setVariable("buIsVomitting", true)
   self:setActionAnim("buVomit")
 end
 
 function BUTimedActionVomit:perform()
-  print("BUVomitTimedAction:perform()")
+  print("BUTimedActionVomit:perform()")
     self.character:setVariable("buIsVomitting", false)
 
   ISBaseTimedAction.perform(self)
 end
 
 function BUTimedActionVomit:stop()
-  print("BUVomitTimedAction:stop()")
-    self.character:setVariable("buIsVomitting", false)
+  print("BUTimedActionVomit:stop()")
+  -- todo: magic number
+  self.character:setVariable("buIsVomitting", false)
 
-  -- if self.soundID and self.character:getEmitter():isPlaying(self.soundID) then
-  --   self.character:getEmitter():stopSound(self.soundID)
-  -- end
+  -- BU.Commands.getModDataValue(getPlayer(), "isLostInTheSauce")
+  BU.Commands.syncAnimStates(getPlayer())
+
   ISBaseTimedAction.stop(self)
 end
 
