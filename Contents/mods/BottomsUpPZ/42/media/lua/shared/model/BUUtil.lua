@@ -1,4 +1,4 @@
-local BUCommands = require("BUCommands")
+local BUCommands = require("model/BUCommands")
 
 ---@class BUUtil
 local BUUtil = {}
@@ -30,10 +30,19 @@ end
 
 ---@param player IsoPlayer
 ---@param command string
----@param payload BUDataPacketPayload
+---@param payload table | nil
+BUUtil.buSendClientCommandList = function(player, command, payload)
+  if isClient() and player:isLocalPlayer() then
+    sendClientCommand(BU.module, command, {payload = payload or {}})
+  end
+end
+
+---@param player IsoPlayer
+---@param command string
+---@param payload table | nil
 BUUtil.buSendServerCommand = function(player, command, payload)
   if isServer() then
-    sendServerCommand(BU.module, command,  {payload = payload, playerId = player:getOnlineID()})
+    sendServerCommand(BU.module, command,  {payload = payload or {}, playerId = player:getOnlineID() or -1})
   end
 end
 

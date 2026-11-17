@@ -1,4 +1,4 @@
-local BUTraits = require("BUTraits")
+local BUTraits = require("model/BUTraits")
 
 ---@class BUConfig
 local BUConfig = {}

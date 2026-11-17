@@ -1,7 +1,7 @@
-local BUModData = require("BUModData")
-local BUCommands = require("BUCommands")
-local BUUtil = require("BUUtil")
-local BUConfig = require("BUConfig")
+local BUModData = require("model/BUModData")
+local BUCommands = require("model/BUCommands")
+local BUUtil = require("model/BUUtil")
+local BUConfig = require("model/BUConfig")
 
 ---@class BUDataPacketPayload
 ---@field key BUModKeys

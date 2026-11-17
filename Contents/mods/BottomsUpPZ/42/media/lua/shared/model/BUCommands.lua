@@ -1,5 +1,5 @@
-local BUModData = require("BUModData")
-local BUAnimState = require("BUAnimState")
+local BUModData = require("model/BUModData")
+local BUAnimState = require("model/BUAnimState")
 
 ---@class BUCommands
 ---@alias BUCommandName keyof BUCommands
@@ -54,11 +54,9 @@ end
 
 ---@generic K: keyof BUModData
 ---@param player IsoPlayer
-BUCommands.setModDataValue = function(player, ...)
-  local args = {...}
-  local key = args[1]
-  local value = args[2]
-  
+---@param key K
+---@param value BUModData[K]
+BUCommands.setModDataValue = function(player, key, value)
   BU.Util.tsPrint("Setting mod data value for player " .. tostring(player:getUsername()) .. ": " .. tostring(key) .. " = " .. tostring(value))
   local modData = BUCommands.getPlayerModData(player)
   modData[key] = value
@@ -71,24 +69,44 @@ BUCommands.setModDataValue = function(player, ...)
 
   BU.Util.buSendServerCommand(
     player, "setModDataValue",
-    {key = key,  value = value}
+    {key, value}
   )
 end
 
 BUCommands.userJoined = function(player)
   BU.Util.tsPrint("User joined: " .. tostring(player:getUsername()))
-  BU.Commands.syncAnimStates(player)
+
+  if isServer() then
+    local players = getOnlinePlayers()
+    for i = 0, players:size() - 1 do
+      local eachPlayer = players:get(i)
+      for _, animState in ipairs(BUAnimState) do
+        print("Syncing anim state for player " .. tostring(player:getUsername()) .. ": " .. tostring(animState.key))
+        local value =  BU.Commands.getModDataValue(eachPlayer, animState.key)
+        -- BU.Commands.setModDataValue(player, animState.key, value)
+        BU.Util.buSendServerCommand(
+          eachPlayer,
+          "setModDataValue",
+          {animState.key, value}
+        )
+      end
+
+      -- BU.Commands.set
+    end
+  end
+
+  -- BU.Commands.syncAnimStates(player)
+  -- BU.Commands.syncAnimStates(getPlayer())
 end
 
 BUCommands.notifyUserJoined = function(player)
   BU.Util.tsPrint("Notifying user joined: " .. tostring(player:getUsername()))
-  BU.Util.buSendClientCommand(player, "userJoined")
+  BU.Util.buSendClientCommandList(player, "userJoined")
 end
 
----@generic K: keyof BUModData
 ---@param player IsoPlayer
----@param key K
----@return BUModData[K]
+---@param key BUModKeys
+---@return BUModData[BUModKeys]
 BUCommands.getModDataValue = function(player, key)
   local modData = BUCommands.getPlayerModData(player)
   return modData[key] or freshModData[key]
@@ -116,8 +134,17 @@ BUCommands.syncAnimStates = function(player)
     BU.Util.buSendServerCommand(
       player,
       "setModDataValue",
-      {key = animState.key, value = value}
+      {animState.key, value}
     )
+  end
+end
+
+
+BUCommands.syncAllPlayerAnimStates = function()
+  local players = getOnlinePlayers()
+  for i = 0, players:size() - 1 do
+    local eachPlayer = players:get(i)
+    BUCommands.syncAnimStates(eachPlayer)
   end
 end
 

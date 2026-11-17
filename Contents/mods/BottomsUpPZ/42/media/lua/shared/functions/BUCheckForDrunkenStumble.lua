@@ -1,9 +1,7 @@
--- local BU = require "BU"
-
 local consecutiveStumbles = BU.Config.STUMBLE_COOLDOWN
 
 ---@param player IsoPlayer
-local function performStumble(player)
+local function doStumble(player)
   player:setBumpType("stagger")
   player:setVariable("BumpFall", true)
   player:setVariable("BumpFallType", "drunk")
@@ -30,8 +28,9 @@ local function checkForDrunkenStumble()
     or player:isAsleep()
   then return end
 
-  local isLostInTheSauce = BU.Commands.getModDataValue(player, "isLostInTheSauce")
-  if isLostInTheSauce and didDrunkenStumble() then performStumble(player) end
+  if BU.Commands.getModDataValue(player, "isLostInTheSauce") 
+    and didDrunkenStumble() 
+  then doStumble(player) end
 end
 
 return checkForDrunkenStumble
