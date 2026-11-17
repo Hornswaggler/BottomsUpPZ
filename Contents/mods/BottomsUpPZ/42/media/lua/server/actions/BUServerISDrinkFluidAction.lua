@@ -1,7 +1,5 @@
 if not isServer() then return end
 
--- local BU = require ("BU")
-local checkForAlcoholPoisoning = require("functions/BUCheckForAlcoholPoisoning")
 local BaseFluidAction = require("actions/BUISDrinkFluidAction")
 
 local superServerStart = ISDrinkFluidAction.serverStart
@@ -11,15 +9,6 @@ function ISDrinkFluidAction:serverStart()
   superServerStart(self)
 end
 
-local superStop = ISDrinkFluidAction.stop
-function ISDrinkFluidAction:stop()
-  -- if isServer() then
-  print("self.buIsAlcoholicDrink: " .. tostring(self.buIsAlcoholicDrink) .. " delta " .. tostring(self:getJobDelta()) )
-  BaseFluidAction.updateDailyConsumptionRemaining(self, self:getJobDelta())
-  -- end
-  superStop(self)
-end
-
 -- todo should use pcall here...
 local superComplete = ISDrinkFluidAction.complete
 function ISDrinkFluidAction:complete()
@@ -27,5 +16,12 @@ function ISDrinkFluidAction:complete()
   print("self.buIsAlcoholicDrink: " .. tostring(self.buIsAlcoholicDrink) )
   BaseFluidAction.updateDailyConsumptionRemaining(self, 1)
 
-return superComplete(self)
+  return superComplete(self)
+end
+
+local superStop = ISDrinkFluidAction.stop
+function ISDrinkFluidAction:stop()
+  print("self.buIsAlcoholicDrink: " .. tostring(self.buIsAlcoholicDrink) .. " delta " .. tostring(self:getJobDelta()) )
+  BaseFluidAction.updateDailyConsumptionRemaining(self, self:getJobDelta())
+  superStop(self)
 end

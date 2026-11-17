@@ -1,7 +1,6 @@
 Events.OnCreatePlayer.Add(function()
   local function initPlayer() 
     local player = getPlayer()
-    print("On Create Player called..." .. tostring(player:getUsername()))
     BU.Commands.syncAnimStates(player)
     BU.Commands.notifyUserJoined(player)
     Events.OnTick.Remove(initPlayer)

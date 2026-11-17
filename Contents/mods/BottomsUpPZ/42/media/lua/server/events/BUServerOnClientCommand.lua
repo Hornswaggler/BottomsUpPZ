@@ -12,7 +12,6 @@ local onClientCommand = function(module, command, player, args)
   if args ~= nil and args.payload ~= nil then
     payload = args.payload
   end
-  -- print("Unpacked?", tostring(unpack(payload,1, #payload) or nil))
 
   BU.Commands[command](player, payload ~= nil and unpack(payload,1, #payload))
 
