@@ -1,20 +1,20 @@
 local BUModData = require("model/BUModData")
 local BUAnimState = require("model/BUAnimState")
 
----@class BUCommands
----@alias BUCommandName keyof BUCommands
-local BUCommands = {}
+
+---@class BUCmd
+---@alias BUCmdName keyof BUCmd
+local buCmd = {}
 
 ---@return BUModData
 local newModData = function()
   ---@type BUModData
-  return {
-    lastDrinkTimestamp = 0,
-    tolerance = 1,
-    dailyConsumptionTarget = 1.0,
-    dailyConsumptionRemaining = 1.0,
-    isLostInTheSauce = false,
-  }
+  local result = {}
+  for k, v in pairs(BUModData) do
+    print("Copying mod data key: " .. tostring(k) .. " = " .. tostring(v))
+    result[k] = v
+  end
+  return result
 end
 
 ---@param player IsoPlayer
@@ -35,7 +35,7 @@ end
 local freshModData = newModData()
 ---@param player IsoPlayer
 ---@return BUModData
-BUCommands.getPlayerModData = function(player)
+buCmd.getPlayerModData = function(player)
   local playerModData = player:getModData()
   if not playerModData.BU then
     playerModData.BU = BUModData
@@ -56,25 +56,25 @@ end
 ---@param player IsoPlayer
 ---@param key K
 ---@param value BUModData[K]
-BUCommands.setModDataValue = function(player, key, value)
-  BU.Util.tsPrint("Setting mod data value for player " .. tostring(player:getUsername()) .. ": " .. tostring(key) .. " = " .. tostring(value))
-  local modData = BUCommands.getPlayerModData(player)
+buCmd.setModDataValue = function(player, key, value)
+  BU.util.tsPrint("Setting mod data value for player " .. tostring(player:getUsername()) .. ": " .. tostring(key) .. " = " .. tostring(value))
+  local modData = buCmd.getPlayerModData(player)
   modData[key] = value
   for _, animState in ipairs(BUAnimState) do
     if animState.key == key then
-      BU.Util.tsPrint("Setting anim state for player " .. tostring(player:getUsername()) .. ": " .. tostring(key) .. " = " .. tostring(value))
+      BU.util.tsPrint("Setting anim state for player " .. tostring(player:getUsername()) .. ": " .. tostring(key) .. " = " .. tostring(value))
       setAnimVariable(player, animState.variable, modData[animState.key])
     end
   end
 
-  BU.Util.buSendServerCommand(
+  BU.util.buSendServerCommand(
     player, "setModDataValue",
     {key, value}
   )
 end
 
-BUCommands.userJoined = function(player)
-  BU.Util.tsPrint("User joined: " .. tostring(player:getUsername()))
+buCmd.userJoined = function(player)
+  BU.util.tsPrint("User joined: " .. tostring(player:getUsername()))
 
   if isServer() then
     local players = getOnlinePlayers()
@@ -82,9 +82,9 @@ BUCommands.userJoined = function(player)
       local eachPlayer = players:get(i)
       for _, animState in ipairs(BUAnimState) do
         print("Syncing anim state for player " .. tostring(player:getUsername()) .. ": " .. tostring(animState.key))
-        local value =  BU.Commands.getModDataValue(eachPlayer, animState.key)
+        local value =  BU.cmd.getModDataValue(eachPlayer, animState.key)
         -- BU.Commands.setModDataValue(player, animState.key, value)
-        BU.Util.buSendServerCommand(
+        BU.util.buSendServerCommand(
           eachPlayer,
           "setModDataValue",
           {animState.key, value}
@@ -99,39 +99,38 @@ BUCommands.userJoined = function(player)
   -- BU.Commands.syncAnimStates(getPlayer())
 end
 
-BUCommands.notifyUserJoined = function(player)
-  BU.Util.tsPrint("Notifying user joined: " .. tostring(player:getUsername()))
-  BU.Util.buSendClientCommandList(player, "userJoined")
+buCmd.notifyUserJoined = function(player)
+  BU.util.tsPrint("Notifying user joined: " .. tostring(player:getUsername()))
+  BU.util.buSendClientCommandList(player, "userJoined")
 end
 
 ---@param player IsoPlayer
 ---@param key BUModKeys
 ---@return BUModData[BUModKeys]
-BUCommands.getModDataValue = function(player, key)
-  local modData = BUCommands.getPlayerModData(player)
+buCmd.getModDataValue = function(player, key)
+  local modData = buCmd.getPlayerModData(player)
   return modData[key] or freshModData[key]
 end
 
 ---@param player IsoPlayer
-BUCommands.updateLastDrinkTimestamp = function(player)
-  BUCommands.setModDataValue(player, "lastDrinkTimestamp", getGametimeTimestamp())
+buCmd.updateLastDrinkTimestamp = function(player)
+  buCmd.setModDataValue(player, "lastDrinkTimestamp", getGametimeTimestamp())
 end
 
 ---@param player IsoPlayer
 ---@param delta number
-BUCommands.updateDailyConsumptionRemaining = function(player, delta)
-  BU.Util.tsPrint("Updating daily consumption remaining by " .. tostring(delta) .. " for player " .. tostring(player:getUsername()))
-  BUCommands.setModDataValue(player, "dailyConsumptionRemaining", BUCommands.getModDataValue(player, "dailyConsumptionRemaining") + delta)
-  BUCommands.updateLastDrinkTimestamp(player)
+buCmd.updateDailyConsumptionRemaining = function(player, delta)
+  BU.util.tsPrint("Updating daily consumption remaining by " .. tostring(delta) .. " for player " .. tostring(player:getUsername()))
+  buCmd.setModDataValue(player, "dailyConsumptionRemaining", buCmd.getModDataValue(player, "dailyConsumptionRemaining") + delta)
 end
 
 ---@param player IsoPlayer
-BUCommands.syncAnimStates = function(player)
-  local modData = BUCommands.getPlayerModData(player)
+buCmd.syncAnimStates = function(player)
+  local modData = buCmd.getPlayerModData(player)
   for _, animState in ipairs(BUAnimState) do
     local value = modData[animState.key]
     setAnimVariable(player, animState.variable, value)
-    BU.Util.buSendServerCommand(
+    BU.util.buSendServerCommand(
       player,
       "setModDataValue",
       {animState.key, value}
@@ -140,12 +139,27 @@ BUCommands.syncAnimStates = function(player)
 end
 
 
-BUCommands.syncAllPlayerAnimStates = function()
+buCmd.syncAllPlayerAnimStates = function()
   local players = getOnlinePlayers()
   for i = 0, players:size() - 1 do
     local eachPlayer = players:get(i)
-    BUCommands.syncAnimStates(eachPlayer)
+    buCmd.syncAnimStates(eachPlayer)
   end
 end
 
-return BUCommands
+---@param player IsoPlayer
+---@param delta number
+buCmd.updateTolerance = function(player, delta)
+  print("Player drank: " .. tostring(delta) .. " pure alcohol. Updating tolerance for player " .. tostring(player:getUsername()))
+  
+  local tolerance = buCmd.getModDataValue(player, "tolerance")
+  local maxTolerance = 0.01
+  local toleranceScalar = 0.05
+  local newTolerance = tolerance - delta * toleranceScalar
+
+  print("New Tolerance: " .. tostring(newTolerance))
+
+  buCmd.setModDataValue(player, "tolerance", newTolerance >= maxTolerance and newTolerance or maxTolerance)
+end
+
+return buCmd

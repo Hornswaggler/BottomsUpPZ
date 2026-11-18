@@ -1,4 +1,4 @@
-local consecutiveStumbles = BU.Config.STUMBLE_COOLDOWN
+local consecutiveStumbles = BU.cfg.STUMBLE_COOLDOWN
 
 ---@param player IsoPlayer
 local function doStumble(player)
@@ -9,8 +9,8 @@ end
 
 ---@return boolean
 local function didDrunkenStumble()
-  if ZombRand(BU.Config.STUMBLE_MAX) > BU.Config.STUMBLE_THRESHOLD then
-    if consecutiveStumbles >= BU.Config.STUMBLE_COOLDOWN then
+  if ZombRand(BU.cfg.STUMBLE_MAX) > BU.cfg.STUMBLE_THRESHOLD then
+    if consecutiveStumbles >= BU.cfg.STUMBLE_COOLDOWN then
       consecutiveStumbles = 0
       return true
     else
@@ -28,7 +28,7 @@ local function checkForDrunkenStumble()
     or player:isAsleep()
   then return end
 
-  if BU.Commands.getModDataValue(player, "isLostInTheSauce") 
+  if BU.cmd.getModDataValue(player, "isLostInTheSauce") 
     and didDrunkenStumble() 
   then doStumble(player) end
 end

@@ -1,0 +1,12 @@
+local BUTraits = require("model/BUTraits")
+
+---@class BUCfg
+local BUCfg = {}
+BUCfg.HEAVY_DRINKER_TRAIT_ID = BUTraits.heavyDrinker
+BUCfg.STUMBLE_MAX = 100
+BUCfg.STUMBLE_THRESHOLD = 1
+BUCfg.STUMBLE_COOLDOWN = 5
+BUCfg.ALCOHOL_POISONING_THRESHOLD = 85.0
+BUCfg.BASE_NAUSEA_DELTA = 10
+
+return BUCfg

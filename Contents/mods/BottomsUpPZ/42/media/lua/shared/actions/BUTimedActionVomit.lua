@@ -37,7 +37,7 @@ function BUTimedActionVomit:stop()
   self.character:setVariable("buIsVomitting", false)
 
   -- BU.Commands.getModDataValue(getPlayer(), "isLostInTheSauce")
-  BU.Commands.syncAnimStates(getPlayer())
+  BU.cmd.syncAnimStates(getPlayer())
 
   ISBaseTimedAction.stop(self)
 end

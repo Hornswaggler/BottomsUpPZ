@@ -13,7 +13,7 @@ local onClientCommand = function(module, command, player, args)
     payload = args.payload
   end
 
-  BU.Commands[command](player, payload ~= nil and unpack(payload,1, #payload))
+  BU.cmd[command](player, payload ~= nil and unpack(payload,1, #payload))
 
   sendServerCommand(module, command, {
     payload = payload,
