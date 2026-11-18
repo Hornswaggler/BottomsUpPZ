@@ -1,8 +1,8 @@
 version=1
 title=BOTTOMS_UP
-description=[h2]Brief 1 sentence description.[/h2]
+description=[h2]Adds updated drinking mechanics, including 2 new traits. WIP, Uploading to unlisted until complete[/h2]
 description=
-description=[url=https://discord.gg/SReMnbV4V7][img]https://raw.githubusercontent.com/Chuckleberry-Finn/chuckImages/main/PZmodCommBanner2.png[/img][/url]
+description=[url=https://github.com/Hornswaggler][img]https://avatars.githubusercontent.com/u/9168476?v=4[/img][/url]
 description=
 description=
 description=[h3]Copyright 2026 <USERNAME>. This item is not authorized for posting on Steam, except under the Steam account named <USERNAME>.[/h3]
