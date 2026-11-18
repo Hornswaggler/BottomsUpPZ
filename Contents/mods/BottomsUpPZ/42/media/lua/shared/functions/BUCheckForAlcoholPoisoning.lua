@@ -15,13 +15,13 @@ local function checkForAlcoholPoisoning(player)
   print("Drunkenness: " .. tostring(drunkenness))
   -- local isLostInTheSauce = false
 
-  if drunkenness > 85.0 then
+  if drunkenness >= BU.cfg.ALCOHOL_POISONING_THRESHOLD then
     -- if isServer() then
     -- isLostInTheSauce = true
       -- BU.Commands.setModDataValue(player, "isLostInTheSauce", true)
     -- end
     -- print("Alcohol poisoning detected!")
-    local severity = (drunkenness - 85.0) / 15.0
+    local severity = (drunkenness - BU.cfg.ALCOHOL_POISONING_THRESHOLD) / 15.0
 
     local damageAmount = 3.0 + (severity * 7.0)
     -- local currentHealth = bodyDamage:getOverallBodyHealth()
@@ -33,11 +33,11 @@ local function checkForAlcoholPoisoning(player)
     -- ISTimedActionQueue.add(BUTimedActionVomit:new(player))
     -- end
 
-    print("last time user had drink CAP:" .. tostring(BU.Commands.getModDataValue(player, "lastDrinkTimestamp")))
+    print("last time user had drink CAP:" .. tostring(BU.cmd.getModDataValue(player, "lastDrinkTimestamp")))
     -- bodyDamage:ReduceGeneralHealth(damageAmount)
   end
 
-  return drunkenness > 85.0
+  return drunkenness >= BU.cfg.ALCOHOL_POISONING_THRESHOLD
 
   -- BU.Commands.setModDataValue(player, "isLostInTheSauce", isLostInTheSauce)
 end

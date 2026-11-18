@@ -1,4 +1,4 @@
-local BUCommands = require("model/BUCommands")
+local BUCommands = require("model/BUCmd")
 
 ---@class BUUtil
 local BUUtil = {}
@@ -17,6 +17,7 @@ BUUtil.PrintPlayerInfo = function(player)
   BUUtil.tsPrint("Daily Consumption Target: " .. tostring(modData.dailyConsumptionTarget))
   BUUtil.tsPrint("Daily Consumption Remaining: " .. tostring(modData.dailyConsumptionRemaining))
   BUUtil.tsPrint("Is Lost In The Sauce: " .. tostring(modData.isLostInTheSauce))
+  BUUtil.tsPrint("Sickness: " .. tostring(player:getStats():get(CharacterStat.FOOD_SICKNESS)))
 end
 
 ---@param player IsoPlayer

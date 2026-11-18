@@ -1,11 +1,11 @@
 -- local BU = require ("BU")
 local checkForAlcoholPoisoning = require("functions/BUCheckForAlcoholPoisoning")
 
-local BaseFluidAction = {}
+local baseFluidAction = {}
 
-BaseFluidAction.InitBUDrinkAction = function(drinkFluidAction)
+baseFluidAction.InitBUDrinkAction = function(drinkFluidAction)
   local player = drinkFluidAction.character
-  if player:hasTrait(CharacterTrait.get(ResourceLocation.of(BU.Config.HEAVY_DRINKER_TRAIT_ID))) then
+  if player:hasTrait(CharacterTrait.get(ResourceLocation.of(BU.cfg.HEAVY_DRINKER_TRAIT_ID))) then
     print("Player has the heavy drinker trait")
   else
     print("Player does not have the trait...")
@@ -26,62 +26,20 @@ BaseFluidAction.InitBUDrinkAction = function(drinkFluidAction)
   end
 end
 
-
--- local superServerStart = ISDrinkFluidAction.serverStart
--- function ISDrinkFluidAction:serverStart()
---   print("Starting timed action on server: " .. tostring(self.character))
---   initBUDrinkAction(self)
---   superServerStart(self)
--- end
-
--- local superStart = ISDrinkFluidAction.start
--- function ISDrinkFluidAction:start()
---   print("Starting to drink...")
---   initBUDrinkAction(self) 
---   superStart(self)
--- end
-
 ---@param drinkFluidAction ISDrinkFluidAction
 ---@param delta number
-BaseFluidAction.updateDailyConsumptionRemaining = function(drinkFluidAction, delta)
+baseFluidAction.onPlayerConsumedAlcohol = function(drinkFluidAction, delta)
 
   print("Updating daily consumption..." .. tostring(isServer()))
 
   -- todo: type safety?
   if drinkFluidAction.buIsAlcoholicDrink then
-    BU.Commands.updateDailyConsumptionRemaining(drinkFluidAction.character, delta * drinkFluidAction.buAlcoholAmount * -1)
-    BU.Commands.setModDataValue(drinkFluidAction.character, "isLostInTheSauce", checkForAlcoholPoisoning(drinkFluidAction.character))
+    local alcoholAmount = delta * drinkFluidAction.buAlcoholAmount
+    BU.cmd.updateDailyConsumptionRemaining(drinkFluidAction.character, alcoholAmount * -1)
+    BU.cmd.updateTolerance(drinkFluidAction.character, alcoholAmount)
+    BU.cmd.updateLastDrinkTimestamp(drinkFluidAction.character)
+    BU.cmd.setModDataValue(drinkFluidAction.character, "isLostInTheSauce", checkForAlcoholPoisoning(drinkFluidAction.character))
   end
 end
 
--- local superPerform = ISDrinkFluidAction.perform
--- function ISDrinkFluidAction:perform()
---   print("Perform complete" .. " is server? " .. tostring(isServer()))
---   print("self.buIsAlcoholicDrink: " .. tostring(self.buIsAlcoholicDrink) )
-
-
---   -- updateDailyConsumptionRemaining(self)
---   superPerform(self)
--- end
-
--- local superStop = ISDrinkFluidAction.stop
--- function ISDrinkFluidAction:stop()
---   if isServer() then
---     print("self.buIsAlcoholicDrink: " .. tostring(self.buIsAlcoholicDrink) .. " delta " .. tostring(self:getJobDelta()) )
---     -- updateDailyConsumptionRemaining(self, self:getJobDelta())
---   end
---   superStop(self)
--- end
-
--- -- todo should use pcall here...
--- local superComplete = ISDrinkFluidAction.complete
--- function ISDrinkFluidAction:complete()
---   if isServer() then
---     print("Called complete" .. " is server? " .. tostring(isServer()))
---     print("self.buIsAlcoholicDrink: " .. tostring(self.buIsAlcoholicDrink) )
---     updateDailyConsumptionRemaining(self, 1)
---   end
---   return superComplete(self)
--- end
-
-return BaseFluidAction
+return baseFluidAction

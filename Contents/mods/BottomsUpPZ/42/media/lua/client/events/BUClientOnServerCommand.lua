@@ -7,8 +7,8 @@ if not isClient() then return end
 local onServerCommand = function(module, command, packet)
   
   if module ~= BU.module or
-    BU.Commands[command] == nil or
-    type(BU.Commands[command]) ~= "function" or
+    BU.cmd[command] == nil or
+    type(BU.cmd[command]) ~= "function" or
     packet == nil
   then return end
 
@@ -20,7 +20,7 @@ local onServerCommand = function(module, command, packet)
     payload = packet.payload
   end
 
-  BU.Commands[command](targetPlayer, unpack(payload,1, #payload))
+  BU.cmd[command](targetPlayer, unpack(payload,1, #payload))
 end
 
 Events.OnServerCommand.Add(onServerCommand)

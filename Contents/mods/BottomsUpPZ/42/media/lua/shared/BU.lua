@@ -1,7 +1,7 @@
-local BUModData = require("model/BUModData")
-local BUCommands = require("model/BUCommands")
-local BUUtil = require("model/BUUtil")
-local BUConfig = require("model/BUConfig")
+local modData = require("model/BUModData")
+local cmd = require("model/BUCmd")
+local util = require("model/BUUtil")
+local cfg = require("model/BUCfg")
 
 ---@class BUDataPacketPayload
 ---@field key BUModKeys
@@ -12,12 +12,12 @@ local BUConfig = require("model/BUConfig")
 ---@field playerId integer
 
 ---@class BU
-BU = BU or {}
+BU = {}
 
 BU.module = "BU"
-BU.Util = BUUtil
-BU.Config = BUConfig
-BU.Commands = BUCommands
-BU.modData = BUModData
+BU.util = util
+BU.cfg = cfg
+BU.cmd = cmd
+BU.modData = modData
 
 return BU
