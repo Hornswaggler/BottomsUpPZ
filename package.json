@@ -3,6 +3,7 @@
     "sync-directory": "^6.0.6"
   },
   "scripts": {
+    "build": "bash ./build.sh",
     "sync": "npx syncdir ./Contents/mods/BottomsUpPZ ../../mods/BottomsUpPZ --watch --deleteOrphaned",
     "launch_debug": "bash ./launchPZ.sh debug",
     "launch_nosteam": "bash ./launchPZ.sh nosteam",
