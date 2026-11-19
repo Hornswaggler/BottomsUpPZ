@@ -15,7 +15,7 @@
     "deployWorkshop": "npm run clean && cp -rv ./src/. \"$HOME/$npm_package_config_workshopBuildDir/\"",
     "deployNoSteam": "npm run clean && cp -rv ./src/. \"$HOME/$npm_package_config_noSteamBuildDir/\"",
 
-    "build": "npx rimraf ./dist/**/* && cp -rv ./src/. ./dist/",
+    "build": "npx rimraf ./build && cp -rv ./src/. ./build/",
 
     "syncWorkshop": "npx syncdir ./src/Contents/mods/BottomsUpPZ \"$HOME/$npm_package_config_workshopBuildDir/\" --watch --deleteOrphaned",
     "syncNoSteam": "npx syncdir ./src/Contents/mods/BottomsUpPZ \"$HOME/$npm_package_config_noSteamBuildDir/\" --watch --deleteOrphaned",
