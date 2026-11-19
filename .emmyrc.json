@@ -3,7 +3,7 @@
     "workspace": {
         "library": ["C:\\projects\\Umbrella-unstable\\library"],
         "workspaceRoots": [
-            "Contents/mods/**/**/media/lua"
+            "src/Contents/mods/**/**/media/lua"
         ]
     }
 }
