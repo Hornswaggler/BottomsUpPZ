@@ -49,7 +49,7 @@ jobs:
           {
             "appid"            "108600"
             "publishedfileid"  "3842158285"
-            "contentfolder"    "${{ github.workspace }}/dist"
+            "contentfolder"    "${{ github.workspace }}/build"
             "previewfile"      "${{ github.workspace }}/preview.png"
             "visibility"       "0"
             "title"            "Your Mod Title"
