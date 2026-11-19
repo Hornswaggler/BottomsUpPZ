@@ -26,4 +26,3 @@ function ISDrinkFluidAction:stop()
 
   superStop(self)
 end
-
