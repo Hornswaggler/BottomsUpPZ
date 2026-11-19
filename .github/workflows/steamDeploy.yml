@@ -1,1 +1,57 @@
+name: Publish to Steam Workshop
 
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+        
+      - name: Install SteamCMD
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          echo steam steam/question select "I AGREE" | sudo debconf-set-selections
+          echo steam steam/license note '' | sudo debconf-set-selections
+          sudo apt-get install -y steamcmd
+
+      - name: Restore Steam Guard Session
+        run: |
+          mkdir -p ~/.local/share/Steam/config
+          echo "${{ secrets.STEAM_CONFIG_VDF }}" | base64 --decode > ~/.local/share/Steam/config/config.vdf
+
+      - name: Generate Workshop VDF
+        run: |
+          cat << 'EOF' > workshop.vdf
+          "workshopitem"
+          {
+            "appid"            "108600"
+            "publishedfileid"  "3842158285"
+            "contentfolder"    "${{ github.workspace }}/dist"
+            "previewfile"      "${{ github.workspace }}/preview.png"
+            "visibility"       "0"
+            "title"            "Your Mod Title"
+            "description"      "Mod description or automated release notes"
+            "changenote"       "${{ github.event.release.body }}"
+          }
+          EOF
+
+      - name: Upload to Steam Workshop
+        run: |
+          /usr/games/steamcmd +login "${{ secrets.STEAM_USERNAME }}" +workshop_build_item "${{ github.workspace }}/workshop.vdf" +quit
