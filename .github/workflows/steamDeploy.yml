@@ -3,6 +3,12 @@ name: Publish to Steam Workshop
 on:
   release:
     types: [published]
+  workflow_dispatch: # Enables manual triggering
+    inputs:
+      reason:
+        description: 'Reason for running the workflow'
+        required: false
+        default: 'Manual test'
 
 jobs:
   deploy:
