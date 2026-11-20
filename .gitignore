@@ -1,6 +1,9 @@
 .idea/*
 .vscode/*
+.env
 /notes/
 /node_modules/
 
 /build/
+
+workshop.vdf
