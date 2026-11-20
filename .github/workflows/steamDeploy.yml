@@ -1,6 +1,10 @@
 name: Publish to Steam Workshop
 
 on:
+  workflow_run:
+    workflows: ["Auto Version"] # Must match the 'name:' in auto-version.yml
+    types:
+      - completed
   workflow_dispatch:
     inputs:
       reason:
