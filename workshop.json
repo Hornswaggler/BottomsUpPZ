@@ -2,7 +2,7 @@
   "appid": "108600",
   "publishedfileid": "3842158285",
   "contentfolder": "{{workingdir}}/build/Contents",
-  "previewfile": "{{workingdir}}/preview.png",
+  "previewfile": "{{workingdir}}/build/preview.png",
   "visibility": "3",
   "title": "Bottoms Up!",
   "description": "{{description}}",
