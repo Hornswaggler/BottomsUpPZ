@@ -1,0 +1,48 @@
+name: Auto Version
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  bump-version:
+    # Prevent infinite loop when the workflow commits the version bump
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository with full history
+        uses: actions/checkout@v4
+        with:
+          # fetch-depth: 0 is required to count all commits accurately
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '26.13.0'
+
+      - name: Calculate and set version
+        run: |
+          # Read current MAJOR.MINOR from package.json
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          MAJOR_MINOR=$(echo "$CURRENT_VERSION" | cut -d. -f1,2)
+          
+          # Count total commits on the branch
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          NEW_VERSION="${MAJOR_MINOR}.${COMMIT_COUNT}"
+          
+          echo "Updating version to $NEW_VERSION"
+          npm version "$NEW_VERSION" --no-git-tag-version
+
+      - name: Commit updated version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@://github.com"
+          git add package.json package-lock.json
+          git commit -m "chore: bump version to $(node -p "require('./package.json').version") [skip ci]"
+          git push
