@@ -54,9 +54,9 @@ jobs:
             "contentfolder"    "${{ github.workspace }}/build/Contents"
             "previewfile"      "${{ github.workspace }}/build/preview.png"
             "visibility"       "0"
-            "title"            "Your Mod Title"
-            "description"      "Mod description or automated release notes"
-            "changenote"       "${{ github.event.release.body }}"
+            "title"            "Bottoms Up! :D"
+            "description"      "One more drink might be one too many. In Project Zomboid Build 42, Bottoms Up brings the booze to life with custom drunken stumbling and falls, plus nausea and vomiting when your survivor overdoes it. Pick the Heavy Drinker trait, raise a glass, and try to stay on your feet... There are zombies to worry about, after all.\n\n[h2]\n[b]Supports Single Player AND Multiplayer![/b][/h2]"
+            "changenote"       "${{github.event.head_commit.message }}"
           }
           EOF
 
