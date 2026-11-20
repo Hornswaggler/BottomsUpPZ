@@ -39,13 +39,6 @@ jobs:
           echo steam steam/license note '' | sudo debconf-set-selections
           sudo apt-get install -y steamcmd jq
 
-      - name: Echo variables
-        env:
-          DEPLOY_WORKING_DIRECTORY: ${{ github.workspace }}
-        run: |
-          echo "Shell env var: $DEPLOY_WORKING_DIRECTORY"
-          echo "GitHub context var: ${{ env.DEPLOY_WORKING_DIRECTORY }}"
-
       - name: Generate workshop.vdf
         env:
           DEPLOY_WORKING_DIRECTORY: ${{ github.workspace }}
