@@ -32,18 +32,15 @@ jobs:
         with:
           node-version: '26.13.0'
 
-      - name: Calculate and set version
+      - name: Bump patch version
         run: |
-          # Read current MAJOR.MINOR from package.json
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
-          MAJOR_MINOR=$(echo "$CURRENT_VERSION" | cut -d. -f1,2)
+          # Ensure a baseline version exists if package.json lacks one
+          if [ -z "$(node -p "require('./package.json').version || ''")" ]; then
+            npm version 0.0.0 --no-git-tag-version
+          fi
           
-          # Count total commits on the branch
-          COMMIT_COUNT=$(git rev-list --count HEAD)
-          NEW_VERSION="${MAJOR_MINOR}.${COMMIT_COUNT}"
-          
-          echo "Updating version to $NEW_VERSION"
-          npm version "$NEW_VERSION" --no-git-tag-version
+          # Increment the third number by exactly 1
+          npm version patch --no-git-tag-version
 
       - name: Commit updated version
         run: |
