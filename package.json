@@ -3,8 +3,8 @@
     "sync-directory": "^6.0.6"
   },
   "config":{
-    "workshopBuildDir": "Zomboid/Workshop/BottomsUpPZ",
-    "noSteamBuildDir": "Zomboid/mods/BottomsUpPZ"
+    "workshopBuildDir": "Zomboid/Workshop/BOTTOMS_UP",
+    "noSteamBuildDir": "Zomboid/mods/BOTTOMS_UP"
   },
   "scripts": {
     "devNoSteam": "npm run syncNoSteam & npm run launch_debug_nosteam",
@@ -15,10 +15,10 @@
     "deployWorkshop": "npm run clean && cp -rv ./src/. \"$HOME/$npm_package_config_workshopBuildDir/\"",
     "deployNoSteam": "npm run clean && cp -rv ./src/. \"$HOME/$npm_package_config_noSteamBuildDir/\"",
 
-    "build": "npx rimraf ./build &&  mkdir -p ./build/BottomsUpPZ && cp -rv ./src/. ./build/BottomsUpPZ",
+    "build": "npx rimraf ./build &&  mkdir -p ./build && cp -rv ./src/. ./build",
 
-    "syncWorkshop": "npx syncdir ./src/Contents/mods/BottomsUpPZ \"$HOME/$npm_package_config_workshopBuildDir/\" --watch --deleteOrphaned",
-    "syncNoSteam": "npx syncdir ./src/Contents/mods/BottomsUpPZ \"$HOME/$npm_package_config_noSteamBuildDir/\" --watch --deleteOrphaned",
+    "syncWorkshop": "npx syncdir ./src/Contents/mods/BOTTOMS_UP \"$HOME/$npm_package_config_workshopBuildDir/\" --watch --deleteOrphaned",
+    "syncNoSteam": "npx syncdir ./src/Contents/mods/BOTTOMS_UP \"$HOME/$npm_package_config_noSteamBuildDir/\" --watch --deleteOrphaned",
 
     "launch_debug_workshop": "bash ./launchPZ.sh debug",
     "launch_nosteam": "bash ./launchPZ.sh nosteam",
