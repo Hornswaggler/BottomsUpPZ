@@ -1,4 +1,4 @@
-version=1
+version=0.0.111
 title=BOTTOMS_UP
 description=[h2]Adds updated drinking mechanics, including 2 new traits. WIP, Uploading to unlisted until complete[/h2]
 description=
