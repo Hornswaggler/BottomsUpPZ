@@ -16,15 +16,15 @@
     "deployNoSteam": "npm run clean && cp -rv ./src/. \"$HOME/$npm_package_config_noSteamBuildDir/\"",
 
     "build": "npx rimraf ./build &&  mkdir -p ./build && cp -rv ./src/. ./build",
-    "generateWorkshopVDF": "bash ./generateWorkshopVDF.sh workshop.json workingdir=\"${DEPLOY_WORKING_DIRECTORY}\" description=\"@workshop_description.txt\" changenote=\"${STEAM_WORKSHOP_CHANGE_NOTE:-Automated deployment}\"",
+    "generateWorkshopVDF": "bash ./scripts/generateWorkshopVDF.sh workshop.json workingdir=\"${DEPLOY_WORKING_DIRECTORY}\" description=\"@workshop_description.txt\" changenote=\"${STEAM_WORKSHOP_CHANGE_NOTE:-Automated deployment}\"",
 
     "syncWorkshop": "npx syncdir ./src/Contents/mods/BOTTOMS_UP \"$HOME/$npm_package_config_workshopBuildDir/\" --watch --deleteOrphaned",
     "syncNoSteam": "npx syncdir ./src/Contents/mods/BOTTOMS_UP \"$HOME/$npm_package_config_noSteamBuildDir/\" --watch --deleteOrphaned",
 
-    "launch_debug_workshop": "bash ./launchPZ.sh debug",
-    "launch_nosteam": "bash ./launchPZ.sh nosteam",
-    "launch_debug_nosteam": "bash ./launchPZ.sh debug_nosteam",
+    "launch_debug_workshop": "bash ./scripts/launchPZ.sh debug",
+    "launch_nosteam": "bash ./scripts/launchPZ.sh nosteam",
+    "launch_debug_nosteam": "bash ./scripts/launchPZ.sh debug_nosteam",
 
-    "tail": "bash ./tailLogs.sh"
+    "tail": "bash ./scripts/tailLogs.sh"
   }
 }
