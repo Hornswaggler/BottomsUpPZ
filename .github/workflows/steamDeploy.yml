@@ -30,35 +30,25 @@ jobs:
 
       - name: Build project
         run: npm run build
-        
+
       - name: Install SteamCMD
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
           echo steam steam/question select "I AGREE" | sudo debconf-set-selections
           echo steam steam/license note '' | sudo debconf-set-selections
-          sudo apt-get install -y steamcmd
+          sudo apt-get install -y steamcmd jq
+
+      - name: Generate workshop.vdf
+        env:
+          WORKSHOP_CHANGE_NOTE: ${{ github.event.head_commit.message || inputs.reason || 'Automated deployment' }}
+        run: npm run generateWorkshopVDF
 
       - name: Restore Steam Guard Session
         run: |
           mkdir -p ~/.local/share/Steam/config
           echo "${{ secrets.STEAM_CONFIG_VDF }}" | base64 --decode > ~/.local/share/Steam/config/config.vdf
 
-      - name: Generate Workshop VDF
-        run: |
-          cat << 'EOF' > workshop.vdf
-          "workshopitem"
-          {
-            "appid"            "108600"
-            "publishedfileid"  "3842158285"
-            "contentfolder"    "${{ github.workspace }}/build/Contents"
-            "previewfile"      "${{ github.workspace }}/build/preview.png"
-            "visibility"       "0"
-            "title"            "Bottoms Up! :D"
-            "description"      "One more drink might be one too many. In Project Zomboid Build 42, Bottoms Up brings the booze to life with custom drunken stumbling and falls, plus nausea and vomiting when your survivor overdoes it. Pick the Heavy Drinker trait, raise a glass, and try to stay on your feet... There are zombies to worry about, after all.\n\n[h2][b]Supports Single Player AND Multiplayer![/b][/h2]"
-            "changenote"       "Is the change note coming through?"
-          }
-          EOF
 
       - name: Upload to Steam Workshop
         run: |
