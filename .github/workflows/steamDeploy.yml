@@ -55,8 +55,8 @@ jobs:
             "previewfile"      "${{ github.workspace }}/build/preview.png"
             "visibility"       "0"
             "title"            "Bottoms Up! :D"
-            "description"      "One more drink might be one too many. In Project Zomboid Build 42, Bottoms Up brings the booze to life with custom drunken stumbling and falls, plus nausea and vomiting when your survivor overdoes it. Pick the Heavy Drinker trait, raise a glass, and try to stay on your feet... There are zombies to worry about, after all.\n\n[h2]\n[b]Supports Single Player AND Multiplayer![/b][/h2]"
-            "changenote"       "${{github.event.head_commit.message }}"
+            "description"      "One more drink might be one too many. In Project Zomboid Build 42, Bottoms Up brings the booze to life with custom drunken stumbling and falls, plus nausea and vomiting when your survivor overdoes it. Pick the Heavy Drinker trait, raise a glass, and try to stay on your feet... There are zombies to worry about, after all.\n\n[h2][b]Supports Single Player AND Multiplayer![/b][/h2]"
+            "changenote"       "Is the change note coming through?"
           }
           EOF
 
