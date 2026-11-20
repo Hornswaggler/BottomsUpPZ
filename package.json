@@ -1,10 +1,10 @@
 {
   "name": "Bottoms Up",
-  "version": "0.0.0",
+  "version": "0.0.109",
   "dependencies": {
     "sync-directory": "^6.0.6"
   },
-  "config":{
+  "config": {
     "workshopBuildDir": "Zomboid/Workshop/BOTTOMS_UP",
     "noSteamBuildDir": "Zomboid/mods/BOTTOMS_UP"
   },
@@ -12,21 +12,16 @@
     "devNoSteam": "npm run syncNoSteam & npm run launch_debug_nosteam",
     "devMulti": "npm run syncNoSteam & npm run launch_debug_nosteam & npm run launch_debug_nosteam",
     "devWorkshop": "npm run syncWorkshop & npm run launch_debug_workshop",
-
     "clean": "npx rimraf \"$HOME/$npm_package_config_workshopBuildDir/\" \"$HOME/$npm_package_config_noSteamBuildDir/\"",
     "deployWorkshop": "npm run clean && cp -rv ./src/. \"$HOME/$npm_package_config_workshopBuildDir/\"",
     "deployNoSteam": "npm run clean && cp -rv ./src/. \"$HOME/$npm_package_config_noSteamBuildDir/\"",
-
     "build": "npx rimraf ./build &&  mkdir -p ./build && cp -rv ./src/. ./build",
     "generateWorkshopVDF": "bash ./scripts/generateWorkshopVDF.sh workshop.json workingdir=\"${DEPLOY_WORKING_DIRECTORY}\" description=\"@workshop_description.txt\" changenote=\"${STEAM_WORKSHOP_CHANGE_NOTE:-Automated deployment}\"",
-
     "syncWorkshop": "npx syncdir ./src/Contents/mods/BOTTOMS_UP \"$HOME/$npm_package_config_workshopBuildDir/\" --watch --deleteOrphaned",
     "syncNoSteam": "npx syncdir ./src/Contents/mods/BOTTOMS_UP \"$HOME/$npm_package_config_noSteamBuildDir/\" --watch --deleteOrphaned",
-
     "launch_debug_workshop": "bash ./scripts/launchPZ.sh debug",
     "launch_nosteam": "bash ./scripts/launchPZ.sh nosteam",
     "launch_debug_nosteam": "bash ./scripts/launchPZ.sh debug_nosteam",
-
     "tail": "bash ./scripts/tailLogs.sh"
   }
 }
