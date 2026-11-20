@@ -20,8 +20,6 @@
     "syncWorkshop": "npx syncdir ./src/Contents/mods/BOTTOMS_UP \"$HOME/$npm_package_config_workshopBuildDir/\" --watch --deleteOrphaned",
     "syncNoSteam": "npx syncdir ./src/Contents/mods/BOTTOMS_UP \"$HOME/$npm_package_config_noSteamBuildDir/\" --watch --deleteOrphaned",
 
-    "DEP_build": "bash ./build.sh/",
-    "DEP_sync": "npx syncdir ./Contents/mods/BOTTOMS_UP ../../mods/BOTTOMS_UP --watch --deleteOrphaned",
     "launch_debug_workshop": "bash ./launchPZ.sh debug",
     "launch_nosteam": "bash ./launchPZ.sh nosteam",
     "launch_debug_nosteam": "bash ./launchPZ.sh debug_nosteam",
