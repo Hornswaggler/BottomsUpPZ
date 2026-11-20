@@ -1,10 +1,10 @@
 {
   "appid": "108600",
   "publishedfileid": "3842158285",
-  "contentfolder": "{{contentfolder}}",
-  "previewfile": "preview.png",
+  "contentfolder": "{{workingdir}}build/Contents",
+  "previewfile": "{{workingdir}}preview.png",
   "visibility": "3",
-  "title": "Bottoms Up! :D",
+  "title": "Bottoms Up!",
   "description": "{{description}}",
   "changenote": "{{changenote}}"
 }

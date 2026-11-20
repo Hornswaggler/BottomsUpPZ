@@ -93,10 +93,6 @@ mapfile -t encoded_keys < <(jq -c 'keys_unsorted[]' "$json_file")
             value="${value//"$marker"/$replacement}"
         done
 
-        if [[ "$value" == *'{{'* ]]; then
-            echo "Error: Unresolved token in metadata field '$key'." >&2
-            exit 1
-        fi
 
         printf '  %s  %s\n' "$(quote_vdf "$key")" "$(quote_vdf "$value")"
     done
