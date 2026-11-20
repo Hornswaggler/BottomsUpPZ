@@ -41,7 +41,7 @@ jobs:
 
       - name: Generate workshop.vdf
         env:
-          DEPLOY_WORKING_DIRECTORY: ${{ github.workspace }}/
+          DEPLOY_WORKING_DIRECTORY: ${{ github.workspace }}
           STEAM_WORKSHOP_CHANGE_NOTE: ${{ github.event.head_commit.message || inputs.reason || 'Automated deployment' }}
         run: npm run generateWorkshopVDF
 
