@@ -52,6 +52,13 @@ jobs:
           STEAM_WORKSHOP_CHANGE_NOTE: ${{ github.event.head_commit.message || inputs.reason || 'Automated deployment' }}
         run: npm run generateWorkshopVDF
 
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-output
+          path: build/
+          retention-days: 7 # Optional: defaults to 90 days
+
       - name: Restore Steam Guard Session
         run: |
           mkdir -p ~/.local/share/Steam/config
