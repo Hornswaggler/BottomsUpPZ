@@ -1,6 +1,6 @@
 {
   "name": "Bottoms Up",
-  "version": "0.0.116",
+  "version": "0.0.117",
   "dependencies": {
     "sync-directory": "^6.0.6"
   },
