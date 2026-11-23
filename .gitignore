@@ -1,6 +1,7 @@
 .idea/*
 .vscode/*
 .env
+.npmrc
 /notes/
 /node_modules/
 
