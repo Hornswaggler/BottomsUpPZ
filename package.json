@@ -1,6 +1,6 @@
 {
   "name": "Bottoms Up",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "devDependencies": {
     "sync-directory": "^6.0.6",
     "dotenv": "18.0.10"
@@ -9,17 +9,13 @@
     "devNoSteam": "npm run syncNoSteam & npm run launch_debug_nosteam",
     "devMulti": "npm run syncNoSteam & npm run launch_debug_nosteam & npm run launch_debug_nosteam",
     "devWorkshop": "npm run syncWorkshop & npm run launch_debug_workshop",
-
     "clean": "dotenv run -- bash -c 'set -eu; npx rimraf \"$HOME/$BUILD_WORKSHOP_PATH/\" \"$HOME/$BUILD_NO_STEAM_PATH/\"'",
     "deployWorkshop": "dotenv run -- bash -c 'set -eu; npm run clean && cp -rv ./src/. \"$HOME/$BUILD_WORKSHOP_PATH/\"'",
     "deployNoSteam": "dotenv run -- bash -c 'set -eu; npm run clean && cp -rv ./src/. \"$HOME/$BUILD_NO_STEAM_PATH/\"'",
-
     "build": "npx dotenv run -- npx rimraf ./build &&  mkdir -p ./build && cp -rv ./src/. ./build",
     "generateWorkshopVDF": "dotenv run -- bash -c 'set -eu; bash ./scripts/generateWorkshopVDF.sh workshop.json \"workingdir=$DEPLOY_WORKING_DIRECTORY\" \"changenote=$STEAM_WORKSHOP_CHANGE_NOTE\" description=\"@workshop_description.txt\"'",
-
     "syncWorkshop": "dotenv run -- bash -c 'set -eu; npx syncdir ./src/Contents/mods/BOTTOMS_UP \"$HOME/$BUILD_WORKSHOP_PATH/\" --watch --deleteOrphaned'",
     "syncNoSteam": "dotenv run -- bash -c 'set -eu; npx syncdir ./src/Contents/mods/BOTTOMS_UP \"$HOME/$BUILD_NO_STEAM_PATH/\" --watch --deleteOrphaned'",
-
     "launch_debug_workshop": "bash ./scripts/launchPZ.sh debug",
     "launch_nosteam": "bash ./scripts/launchPZ.sh nosteam",
     "launch_debug_nosteam": "bash ./scripts/launchPZ.sh debug_nosteam",
